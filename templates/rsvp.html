@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP Form</title>
+</head>
+<body>
+    <h1>RSVP</h1>
+    <form id="rsvp-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br><br>
+        
+        <label for="coming">Are you coming?</label>
+        <input type="checkbox" id="coming" name="coming">
+        <br><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="response-message" style="display:none;"></div>
+
+    <script>
+        document.getElementById('rsvp-form').addEventListener('submit', function(event) {
+	    // Prevent the default form submission
+            event.preventDefault();
+
+            // Create JSON object
+            const formData = {
+                name: document.getElementById('name').value,
+                coming: document.getElementById('coming').checked
+            };
+
+            // Send the form data as JSON using the fetch API
+            fetch('/submit', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+	    .then((response) => {
+	        if (response.ok) { return response; }
+	        throw new Error('Something went wrong');
+	    })
+	    .then((response) => {
+	        // Do something with the response
+                console.info(response);
+		// Remove the form from the page
+		document.getElementById('rsvp-form').style.display = 'none';
+
+		// Display the success message
+		const responseMessage = document.getElementById('response-message');
+		responseMessage.innerHTML = '<h2>Okay</h2>';
+		responseMessage.style.display = 'block';
+	    })
+	    .catch((error) => {
+                // Handle error - you can alert the user or log the error
+                console.error('Error:', error);
+                alert('An error occurred during form submission.');
+	    });
+        });
+    </script>
+</body>
+</html>
