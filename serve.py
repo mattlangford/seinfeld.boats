@@ -26,7 +26,7 @@ def create_connection():
 
 @app.route('/')
 def rsvp_form():
-    return flask.render_template('rsvp.html')
+    return flask.render_template('index.html')
 
 @app.route('/submit', methods=['PUT'])
 def put_data():

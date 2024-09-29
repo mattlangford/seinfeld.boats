@@ -5,9 +5,180 @@
     <title>Spooky Seinfeld</title>
     <link rel="icon" type="image/x-icon" sizes="256x256" href="assets/seinfeld.ico">
 
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Old Standard TT', serif;
+            overflow: hidden; /* Prevents scrollbars */
+            display: flex;
+            flex-direction: column;
+            background-color: black;
+        }
 
-    <link rel="stylesheet" href="index.css">
-    <script src="index.js"></script>
+        .image-container {
+            width: calc(100% + 10px); /* Expands the width by 20px */
+            margin-left: -5px; /* Shifts 10px to the left */
+            margin-right: -5px; /* Shifts 10px to the right */
+            max-height: 90vh; /* The image will take 90% of the viewport height */
+            overflow: hidden;
+        }
+
+        .background-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover; /* Ensures the image covers the container */
+            display: block;
+        }
+
+        .content {
+            width: 100%;
+            min-height: 20vh; /* The reserved div will take 10% of the viewport height */
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0px 20px;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        #invite {
+            font-size: 1.0em;
+        }
+        #invite a {
+            color: white;
+        }
+
+        #rsvp-container {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            color: white;
+            transition: opacity 0.5s ease-in-out;
+            font-size: 2.0em;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            transition: opacity 0.2s ease-in-out;
+            opacity: 0;
+        }
+
+        #title {
+            font-size: 2.0em;
+            color: white;
+            margin: 0 0 10px 0;
+        }
+
+        input, button {
+            width: 100%;
+            height: 100%;
+            font-size: 1.0em;
+            box-sizing: border-box;
+            color: white;
+            background-color: black;
+            border: 1px solid white;
+            border-radius: 25px;
+        }
+
+        input {
+            text-align:center;
+            margin: 0px 0 5px 0;
+            font-size: 1.2em;
+            height: 1.5em;
+        }
+
+        button {
+            margin: 0 2px 0 2px;
+        }
+
+        input::placeholder {
+            color: wite;
+        }
+
+        input:focus, button:focus {
+            outline: none;
+            box-shadow: 0 0 5px white;
+        }
+
+        input:hover, button:hover {
+            background-color: #333;
+            cursor: pointer;
+        }
+
+    </style>
+
+    <script>
+        function onSubmit(coming) {
+            var name = document.getElementById('name').value;
+            console.info("name", name);
+            if (!name) {
+                return;
+            }
+            fadeForm();
+            return;
+
+            // Create JSON object
+            const formData = { name: name, coming: coming };
+
+            // Send the form data as JSON using the fetch API
+            fetch('/submit', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then((response) => {
+                    if (response.ok) { return response; }
+                    throw new Error('Something went wrong');
+                })
+                .then((response) => {
+                    console.info(response);
+                    fade()
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('An error occurred during form submission.');
+                });
+
+        }
+
+        function handleInput() {
+            const text = document.getElementById('name').value.trim();
+
+            var container = document.getElementById('button-container');
+            if (text) {
+                container.style.opacity = 1;
+                container.style.pointerEvents = "";
+            } else {
+                container.style.opacity = 0;
+                container.style.pointerEvents = "none";
+            }
+        }
+
+
+        function fadeForm() {
+            console.log("fade");
+            var rsvp_container = document.getElementById('rsvp-container');
+
+            rsvp_container.style.opacity = 0;
+            rsvp_container.style.pointerEvents = "none";
+
+            var title = document.getElementById('title');
+            console.log(title.innerText);
+            title.innerText = "Thank you\n" + document.getElementById('name').value;
+            title.setAttribute("align", "center");
+        }
+    </script>
 </head>
 
 <body>
