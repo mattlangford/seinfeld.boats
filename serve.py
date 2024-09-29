@@ -5,6 +5,8 @@ import os
 from datetime import datetime
 
 app = flask.Flask(__name__)
+app.add_url_rule('/favicon.ico',
+                 redirect_to=flask.url_for('assets', filename='seinfeld.ico'))
 
 db_config = {
     'host': 'localhost',
