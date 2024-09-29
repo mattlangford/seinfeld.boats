@@ -31,7 +31,7 @@
             overflow: hidden;
         }
 
-        .background-image {
+        #background-image {
             width: 100%;
             height: auto;
             object-fit: cover;
@@ -39,7 +39,7 @@
             display: block;
         }
 
-        .content {
+        #content {
             width: 100%;
             min-height: 20vh;
             /* The reserved div will take 10% of the viewport height */
@@ -211,18 +211,18 @@
             var title = document.getElementById('title');
             title.innerHTML = "<b><center>Thank you<br>" + name;
         };
-
+	console.log(document.getElementById('background-image'));
     </script>
 </head>
 
 <body>
     <div class="image-container">
-        <img src="bg.jpeg" alt="Background Image" class="background-image">
+        <img src="bg.jpeg" alt="Background Image" id="background-image" onload="document.getElementById('content').style.visibility = ''">
     </div>
 
     <br />
 
-    <div class="content">
+    <div id="content" style="visibility: hidden;">
         <div id="invite">
             <b>You're invited!</b> There will be a costume contest, a feats of strength competition, and plenty of
             Hennigan's to go around. If you haven't seen Seinfeld, feel free to just dress up a la '90s and we encourage
@@ -244,8 +244,4 @@
     </div>
 
 </body>
-<<<<<<< Updated upstream </html>
-    =======
-
 </html>
->>>>>>> Stashed changes
