@@ -118,12 +118,9 @@
     <script>
         function onSubmit(coming) {
             var name = document.getElementById('name').value;
-            console.info("name", name);
             if (!name) {
                 return;
             }
-            fadeForm();
-            return;
 
             // Create JSON object
             const formData = { name: name, coming: coming };
@@ -142,7 +139,7 @@
                 })
                 .then((response) => {
                     console.info(response);
-                    fade()
+                    fadeForm()
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -173,7 +170,6 @@
             rsvp_container.style.pointerEvents = "none";
             setTimeout(function() {
                 var title = document.getElementById('title');
-                console.log(title.innerText);
                 title.innerHTML = "<b><center>Thank you<br>" + document.getElementById('name').value;
             }, 500);
         }
@@ -199,8 +195,8 @@
             <input type="text" id="name" name="name" oninput="handleInput()" placeholder="Enter your name"  required>
 
             <div id="button-container">
-                <button onclick="onSubmit(true)">I'll be there</button>
                 <button onclick="onSubmit(false)">Can't make it</button>
+                <button onclick="onSubmit(true)">I'll be there</button>
             </div>
         </div>
     </div>

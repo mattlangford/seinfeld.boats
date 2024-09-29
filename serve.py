@@ -5,8 +5,6 @@ import os
 from datetime import datetime
 
 app = flask.Flask(__name__)
-app.add_url_rule('/favicon.ico',
-                 redirect_to=flask.url_for('assets', filename='seinfeld.ico'))
 
 db_config = {
     'host': 'localhost',
@@ -29,6 +27,10 @@ def create_connection():
 @app.route('/')
 def rsvp_form():
     return flask.render_template('index.html')
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'assets'), 'favicon.ico')
 
 @app.route('/submit', methods=['PUT'])
 def put_data():
