@@ -5,36 +5,44 @@
     <title>Spooky Seinfeld</title>
 
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
             font-family: 'Old Standard TT', serif;
-            overflow: hidden; /* Prevents scrollbars */
+            overflow: hidden;
+            /* Prevents scrollbars */
             display: flex;
             flex-direction: column;
             background-color: black;
         }
 
         .image-container {
-            width: calc(100% + 10px); /* Expands the width by 20px */
-            margin-left: -5px; /* Shifts 10px to the left */
-            margin-right: -5px; /* Shifts 10px to the right */
-            max-height: 90vh; /* The image will take 90% of the viewport height */
+            width: calc(100% + 10px);
+            /* Expands the width by 20px */
+            margin-left: -5px;
+            /* Shifts 10px to the left */
+            margin-right: -5px;
+            /* Shifts 10px to the right */
+            max-height: 90vh;
+            /* The image will take 90% of the viewport height */
             overflow: hidden;
         }
 
         .background-image {
             width: 100%;
             height: auto;
-            object-fit: cover; /* Ensures the image covers the container */
+            object-fit: cover;
+            /* Ensures the image covers the container */
             display: block;
         }
 
         .content {
             width: 100%;
-            min-height: 20vh; /* The reserved div will take 10% of the viewport height */
+            min-height: 20vh;
+            /* The reserved div will take 10% of the viewport height */
             background-color: black;
             color: white;
             display: flex;
@@ -48,6 +56,7 @@
         #invite {
             font-size: 1.0em;
         }
+
         #invite a {
             color: white;
         }
@@ -77,7 +86,8 @@
             margin: 0 0 10px 0;
         }
 
-        input, button {
+        input,
+        button {
             width: 100%;
             height: 100%;
             font-size: 1.0em;
@@ -89,7 +99,7 @@
         }
 
         input {
-            text-align:center;
+            text-align: center;
             margin: 0px 0 5px 0;
             font-size: 1.2em;
             height: 1.5em;
@@ -103,16 +113,17 @@
             color: wite;
         }
 
-        input:focus, button:focus {
+        input:focus,
+        button:focus {
             outline: none;
             box-shadow: 0 0 5px white;
         }
 
-        input:hover, button:hover {
+        input:hover,
+        button:hover {
             background-color: #333;
             cursor: pointer;
         }
-
     </style>
 
     <script>
@@ -139,13 +150,13 @@
                 })
                 .then((response) => {
                     console.info(response);
+                    setCookie("name", name);
                     fadeForm()
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                     alert('An error occurred during form submission.');
                 });
-
         }
 
         function handleInput() {
@@ -163,36 +174,67 @@
 
 
         function fadeForm() {
-            console.log("fade");
             var rsvp_container = document.getElementById('rsvp-container');
 
             rsvp_container.style.opacity = 0;
             rsvp_container.style.pointerEvents = "none";
-            setTimeout(function() {
+            setTimeout(function () {
                 var title = document.getElementById('title');
                 title.innerHTML = "<b><center>Thank you<br>" + document.getElementById('name').value;
             }, 500);
         }
+
+        // Function to set a cookie
+        function setCookie(name, value) {
+            document.cookie = name + "=" + (value || "") + "; path=/";
+        }
+
+        // Function to get a cookie value by name
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        window.onload = function () {
+            const name = getCookie("name");
+            if (!name) {
+                return;
+            }
+
+            document.getElementById('rsvp-container').style.visibility = "hidden";
+            var title = document.getElementById('title');
+            title.innerHTML = "<b><center>Thank you<br>" + name;
+        };
+
     </script>
 </head>
 
 <body>
     <div class="image-container">
-        <img src="https://i.imgur.com/c7rnRN2.jpeg" alt="Background Image" class="background-image">
+        <img src="bg.jpeg" alt="Background Image" class="background-image">
     </div>
 
-    <br/>
+    <br />
 
     <div class="content">
         <div id="invite">
-            <b>You're invited!</b> There will be a costume contest, a feats of strength competition, and plenty of Hennigan's to go around. If you haven't seen Seinfeld, feel free to just dress up a la '90s and we encourage you to familiarize yourself with the world by watching <a href="https://en.wikipedia.org/wiki/The_Rye">S7E11 "The Rye"</a> (it's on Netflix) (although all episodes are great). Hope to see you there!
+            <b>You're invited!</b> There will be a costume contest, a feats of strength competition, and plenty of
+            Hennigan's to go around. If you haven't seen Seinfeld, feel free to just dress up a la '90s and we encourage
+            you to familiarize yourself with the world by watching <a href="https://en.wikipedia.org/wiki/The_Rye">S7E11
+                "The Rye"</a> (it's on Netflix) (although all episodes are great). Hope to see you there!
         </div>
-        <br/>
+        <br />
         <div id="title">
             <b>Please RSVP Here</b>
         </div>
         <div id="rsvp-container">
-            <input type="text" id="name" name="name" oninput="handleInput()" placeholder="Enter your name"  required>
+            <input type="text" id="name" name="name" oninput="handleInput()" placeholder="Enter your name" required>
 
             <div id="button-container">
                 <button onclick="onSubmit(false)">Can't make it</button>
@@ -202,4 +244,8 @@
     </div>
 
 </body>
+<<<<<<< Updated upstream </html>
+    =======
+
 </html>
+>>>>>>> Stashed changes

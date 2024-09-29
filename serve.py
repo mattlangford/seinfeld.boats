@@ -31,6 +31,10 @@ def rsvp_form():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'assets'), 'favicon.ico')
+@app.route('/bg.jpeg')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'assets'), 'bg.jpeg')
+
 
 @app.route('/submit', methods=['PUT'])
 def put_data():
