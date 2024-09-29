@@ -21,13 +21,9 @@
 
         .image-container {
             width: calc(100% + 10px);
-            /* Expands the width by 20px */
             margin-left: -5px;
-            /* Shifts 10px to the left */
             margin-right: -5px;
-            /* Shifts 10px to the right */
-            max-height: 90vh;
-            /* The image will take 90% of the viewport height */
+            max-height: 75vh;
             overflow: hidden;
         }
 
@@ -35,14 +31,12 @@
             width: 100%;
             height: auto;
             object-fit: cover;
-            /* Ensures the image covers the container */
             display: block;
         }
 
         #content {
             width: 100%;
-            min-height: 20vh;
-            /* The reserved div will take 10% of the viewport height */
+            min-height: 25vh;
             background-color: black;
             color: white;
             display: flex;
@@ -234,7 +228,7 @@
             <b>Please RSVP Here</b>
         </div>
         <div id="rsvp-container">
-            <input type="text" id="name" name="name" oninput="handleInput()" placeholder="Enter your name" required>
+            <input type="text" id="name" oninput="handleInput()" placeholder="Enter your name" required>
 
             <div id="button-container">
                 <button onclick="onSubmit(false)">Can't make it</button>

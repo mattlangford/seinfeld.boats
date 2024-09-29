@@ -3,6 +3,7 @@ import mysql.connector
 from mysql.connector import Error
 import os
 from datetime import datetime
+import pytz
 
 app = flask.Flask(__name__)
 
@@ -45,8 +46,11 @@ def put_data():
 
     name = data.get('name')
     coming = data.get('coming')
-    ip = flask.request.remote_addr
-    date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if flask.request.headers.getlist("X-Forwarded-For"):
+        ip = flask.request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        ip = flask.request.remote_addr  # Fallback to remote_addr if no header present
+    date = datetime.now(pytz.timezone("America/New_York")).strftime("%Y-%m-%d %H:%M:%S")
 
     if not name:
         return "Missing required data", 400
