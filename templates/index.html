@@ -172,11 +172,11 @@
 
             rsvp_container.style.opacity = 0;
             rsvp_container.style.pointerEvents = "none";
-
-            var title = document.getElementById('title');
-            console.log(title.innerText);
-            title.innerText = "Thank you\n" + document.getElementById('name').value;
-            title.setAttribute("align", "center");
+            setTimeout(function() {
+                var title = document.getElementById('title');
+                console.log(title.innerText);
+                title.innerHTML = "<b><center>Thank you<br>" + document.getElementById('name').value;
+            }, 500);
         }
     </script>
 </head>
